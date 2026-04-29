@@ -1,0 +1,19 @@
+---
+const links = [
+  { label: "Email", href: "mailto:azijulakbar19@email.com", display: "azijulakbar19@email.com" },
+  { label: "GitHub", href: "https://github.com/AzijulAkbar", display: "github.com/AzijulAkbar" },
+  { label: "Instagram", href: "https://www.instagram.com/njulwelah/", display: "njulwelah" },
+];
+---
+<section id="contact">
+  <h2>Contact</h2>
+  <p style="color:var(--muted);margin-bottom:2rem;">Tertarik bekerja sama? Hubungi saya melalui:</p>
+  <div style="display:flex;flex-direction:column;gap:.75rem;">
+    {links.map(l => (
+      <a href={l.href} style="display:flex;align-items:center;gap:1rem;color:var(--text);">
+        <span style="width:80px;color:var(--muted);font-size:.85rem;">{l.label}</span>
+        <span style="color:var(--accent-light);">{l.display}</span>
+      </a>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,164 @@
+---
+const projects = [
+  {
+    title: "Grow A Garden Roblox Assets",
+    desc: "Aset 3D untuk game Roblox Grow A Garden. Berisi tanaman, pot, tanah, dan props kebun.",
+    software: ["Blender", "Roblox Studio"],
+    image: "/projects/AsetGAG.png",
+  },
+  {
+    title: "Steal A Brainrot Roblox Assets",
+    desc: "Aset 3D untuk game Roblox Steal A Brainrot. Berisi karakter unik, props interaktif, dan objek stylized.",
+    software: ["Blender", "Roblox Studio"],
+    image: "/projects/AsetSAB.png",
+  },
+  {
+    title: "Plant vs Brainrot Roblox Assets",
+    desc: "Aset 3D untuk game Roblox Plant vs Brainrot. Berisi karakter tanaman, musuh stylized, dan props arena.",
+    software: ["Blender", "Roblox Studio"],
+    image: "/projects/AsetPvB.png",
+  },
+];
+---
+
+<section id="projects">
+  <h2>Projects</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;">
+    {projects.map((p, i) => (
+      <button
+        data-modal={i}
+        style="background:var(--surface);border:1px solid #2e2e2e;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;transition:border-color .2s;width:100%;padding:0;"
+        onmouseover="this.style.borderColor='#7c3aed'"
+        onmouseout="this.style.borderColor='#2e2e2e'"
+      >
+        <div style="aspect-ratio:16/9;background:#262626;overflow:hidden;">
+          <img src={p.image} alt={p.title} style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'" />
+        </div>
+        <div style="padding:1.25rem;display:flex;flex-direction:column;gap:.5rem;flex:1;">
+          <h3 style="font-size:1.05rem;color:#ffffff;">{p.title}</h3>
+          <p style="color:var(--muted);font-size:.875rem;flex:1;">{p.desc}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.25rem;">
+            {p.software.map(s => (
+              <span style="font-size:.75rem;color:var(--accent-light);background:#1f1535;padding:.2rem .6rem;border-radius:4px;">{s}</span>
+            ))}
+          </div>
+        </div>
+      </button>
+    ))}
+  </div>
+</section>
+
+<!-- Modal data di-inject via JS agar selalu center di viewport -->
+<div id="modal-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+  <div id="modal-box" style="background:var(--surface);border:1px solid #2e2e2e;border-radius:12px;width:90%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;">
+    <img id="modal-img" src="" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" />
+    <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
+        <h3 id="modal-title" style="font-size:1.2rem;color:#ffffff;"></h3>
+        <button id="modal-close" style="background:none;border:none;color:var(--muted);font-size:1.25rem;cursor:pointer;line-height:1;flex-shrink:0;">✕</button>
+      </div>
+      <div id="modal-software" style="display:flex;flex-wrap:wrap;gap:.4rem;"></div>
+      <p id="modal-details" style="color:var(--muted);font-size:.9rem;white-space:pre-line;line-height:1.8;"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const data = [
+    ...document.querySelectorAll('[data-modal]')
+  ].map(btn => {
+    const i = btn.getAttribute('data-modal');
+    return {
+      i,
+      title: btn.querySelector('h3')!.textContent!,
+      desc: btn.querySelector('p')!.textContent!,
+      image: btn.querySelector('img')!.src,
+      software: [...btn.querySelectorAll('span')].map(s => s.textContent!),
+    };
+  });
+
+  const overlay = document.getElementById('modal-overlay')!;
+  const box = document.getElementById('modal-box')!;
+  const imgEl = document.getElementById('modal-img') as HTMLImageElement;
+  const titleEl = document.getElementById('modal-title')!;
+  const softwareEl = document.getElementById('modal-software')!;
+  const detailsEl = document.getElementById('modal-details')!;
+  const closeBtn = document.getElementById('modal-close')!;
+
+  const details = [
+    `Grow a Garden adalah game indie di platform Roblox yang dikembangkan oleh Splitting Point Studios dan Do Big Studios.
+
+    Penjelasan Game: Game ini berfokus pada simulasi berkebun di mana pemain mengelola lahan untuk menumbuhkan berbagai jenis tanaman.
+    
+    Cara Bermain:
+    1. Pemain memulai dengan sebidang tanah kecil untuk menanam bunga, buah-buahan, dan sayuran.
+    2. Setelah tanaman tumbuh, pemain dapat memanen dan menjual hasilnya untuk mendapatkan mata uang bernama Sheckles.
+    3. Sheckles tersebut kemudian digunakan untuk membeli benih baru, peralatan (gears), telur (eggs), serta barang dekoratif.
+    
+    Fitur Utama:
+    1. Peningkatan Pengalaman: Pemain bisa memperluas lahan dan menggunakan gears untuk mempercepat proses pertumbuhan.
+    2. Sistem Pet: Pemain dapat menetaskan telur untuk mendapatkan hewan peliharaan (pets) yang memiliki kemampuan pasif unik untuk membantu pertumbuhan tanaman.
+    3. Cuaca dan Mutasi: Adanya sistem cuaca dapat memicu mutasi tanaman, yang meningkatkan nilai jual hasil panen atau membantu menyelesaikan misi (quests) tertentu.
+    4. Event: Terdapat event musiman seperti Easter 2026 dan fitur komunitas seperti Community Garden.`,
+
+    `Plants & Brainrots adalah game Roblox yang dikembangkan oleh Splitting Point - PVB.
+
+    Penjelasan Game: Fokus utama game ini adalah pertarungan antara tanaman dan makhluk yang disebut brainrots.
+    
+    Cara Bermain:
+    1. Pemain harus menanam berbagai jenis tanaman yang berfungsi untuk menghancurkan serangan brainrots.
+    2. Setiap kali berhasil menghancurkan musuh, pemain akan mendapatkan uang.
+    3. Uang ini digunakan untuk membeli tanaman yang lebih kuat dan berbagai peningkatan (upgrades) lainnya.
+    
+    Fitur Utama:
+    1. Elemen Gameplay: Game ini menyediakan fitur Lucky Eggs, peralatan (gears), kartu (cards), dan sistem mutasi.
+    2. Eksplorasi: Terdapat berbagai biome, sistem cuaca, dan alur cerita (story) yang bisa diikuti pemain.
+    3. Mekanik Lanjutan: Pemain dapat menggunakan mesin pelebur (Fuse Machine) dan melakukan Rebirth untuk kemajuan karakter yang lebih jauh.`,
+
+    `Steal a Brainrot adalah game Roblox karya pengembang BRAZILIAN SPYDER dan Sammy.
+
+    Penjelasan Game: Berbeda dengan dua game sebelumnya, game ini memiliki aspek kompetitif yang kuat di mana pemain saling berinteraksi secara agresif.
+    
+    Cara Bermain:
+    1. Tujuan utama pemain adalah mencuri Brainrots milik pemain lain.
+    2. Dengan mencuri, pemain akan mendapatkan lebih banyak uang yang bisa digunakan untuk membeli lebih banyak Brainrots untuk koleksi mereka sendiri.
+    3. Sambil menyerang, pemain juga harus mempertahankan Brainrots milik mereka sendiri agar tidak dicuri balik oleh orang lain.
+    
+    Fitur Utama:
+    1. Lucky Blocks: Pemain bisa berinteraksi dengan berbagai jenis blok keberuntungan seperti Admin Lucky Block atau Mythic Lucky Block.
+    2. Perdagangan: Tersedia fitur Trade Machine yang memungkinkan pemain bertukar koleksi secara aman.
+    3. Kustomisasi dan Evolusi: Terdapat fitur mutasi, mesin pelebur (fuse machine), dan sistem traits untuk memperkuat koleksi.
+    4. Event Rutin: Game ini memiliki jadwal event khusus seperti Taco Tuesday yang diadakan setiap hari Selasa.`,
+  ];
+
+  function openModal(i: number) {
+    const d = data[i];
+    imgEl.src = d.image;
+    imgEl.alt = d.title;
+    titleEl.textContent = d.title;
+    detailsEl.textContent = details[i];
+    softwareEl.innerHTML = d.software.map(s =>
+      `<span style="font-size:.75rem;color:var(--accent-light);background:#1f1535;padding:.2rem .6rem;border-radius:4px;">${s}</span>`
+    ).join('');
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => { box.scrollTop = 0; });
+  }
+
+  function closeModal() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+    requestAnimationFrame(() => { box.scrollTop = 0; });
+  }
+
+  document.querySelectorAll('[data-modal]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      openModal(Number(btn.getAttribute('data-modal')));
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+</script>
