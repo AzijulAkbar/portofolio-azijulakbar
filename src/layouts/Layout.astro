@@ -1,4 +1,6 @@
 ---
+import Analytics from '@vercel/analytics/astro';
+
 interface Props {
   title?: string;
 }
@@ -49,5 +51,6 @@ const { title = "Azijul Akbar — Portfolio" } = Astro.props;
     <footer style="text-align:center;padding:2rem;color:var(--muted);font-size:.85rem;border-top:1px solid #262626;">
       Copyright © {new Date().getFullYear()} 2026 Azijul Akbar Nur Fatihah
     </footer>
+    <Analytics />
   </body>
 </html>
