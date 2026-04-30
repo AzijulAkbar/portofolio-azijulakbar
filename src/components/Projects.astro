@@ -22,24 +22,27 @@ const projects = [
 ---
 
 <section id="projects">
-  <h2>Projects</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;">
+  <div class="reveal">
+    <p class="section-label">Portofolio</p>
+    <h2>3D Modeling Projects</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;" class="reveal">
     {projects.map((p, i) => (
       <button
         data-modal={i}
-        style="background:var(--surface);border:1px solid #2e2e2e;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;transition:border-color .2s;width:100%;padding:0;"
-        onmouseover="this.style.borderColor='#7c3aed'"
-        onmouseout="this.style.borderColor='#2e2e2e'"
+        style="background:var(--surface2);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;text-align:left;cursor:pointer;transition:all .25s;width:100%;padding:0;"
+        onmouseover="this.style.borderColor='rgba(167,139,250,.4)';this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 40px rgba(124,58,237,.15)'"
+        onmouseout="this.style.borderColor='var(--border)';this.style.transform='';this.style.boxShadow=''"
       >
-        <div style="aspect-ratio:16/9;background:#262626;overflow:hidden;">
-          <img src={p.image} alt={p.title} style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'" />
+        <div style="aspect-ratio:16/9;background:#0d0d1a;overflow:hidden;">
+          <img src={p.image} alt={p.title} style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" onerror="this.style.display='none'" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform=''" />
         </div>
         <div style="padding:1.25rem;display:flex;flex-direction:column;gap:.5rem;flex:1;">
-          <h3 style="font-size:1.05rem;color:#ffffff;">{p.title}</h3>
-          <p style="color:var(--muted);font-size:.875rem;flex:1;">{p.desc}</p>
-          <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.25rem;">
+          <h3 style="font-size:1rem;color:#fff;font-weight:600;">{p.title}</h3>
+          <p style="color:var(--muted);font-size:.825rem;flex:1;line-height:1.6;">{p.desc}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;">
             {p.software.map(s => (
-              <span style="font-size:.75rem;color:var(--accent-light);background:#1f1535;padding:.2rem .6rem;border-radius:4px;">{s}</span>
+              <span style="font-size:.7rem;color:var(--accent-light);background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);padding:.2rem .6rem;border-radius:4px;">{s}</span>
             ))}
           </div>
         </div>
@@ -49,18 +52,18 @@ const projects = [
 </section>
 
 <!-- Modal data di-inject via JS agar selalu center di viewport -->
-<div id="modal-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
-  <div id="modal-box" style="background:var(--surface);border:1px solid #2e2e2e;border-radius:12px;width:90%;max-width:560px;max-height:90vh;overflow:hidden;position:relative;display:flex;flex-direction:column;">
+<div id="modal-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);align-items:center;justify-content:center;">
+  <div id="modal-box" style="background:var(--surface2);border:1px solid var(--border);border-radius:16px;width:90%;max-width:560px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.6);">
     <img id="modal-img" src="" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;flex-shrink:0;" />
     <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto;flex:1;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
-        <h3 id="modal-title" style="font-size:1.2rem;color:#ffffff;"></h3>
-        <button id="modal-close" style="background:none;border:none;color:var(--muted);font-size:1.25rem;cursor:pointer;line-height:1;flex-shrink:0;">✕</button>
+        <h3 id="modal-title" style="font-size:1.15rem;color:#fff;font-weight:600;"></h3>
+        <button id="modal-close" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✕</button>
       </div>
       <div id="modal-software" style="display:flex;flex-wrap:wrap;gap:.4rem;"></div>
-      <p id="modal-details" style="color:var(--muted);font-size:.9rem;white-space:pre-line;line-height:1.8;"></p>
+      <p id="modal-details" style="color:var(--muted);font-size:.875rem;white-space:pre-line;line-height:1.8;"></p>
     </div>
-    <div id="modal-footer" style="display:flex;gap:.75rem;padding:1rem 1.5rem;border-top:1px solid #2e2e2e;flex-shrink:0;"></div>
+    <div id="modal-footer" style="display:flex;gap:.75rem;padding:1rem 1.5rem;border-top:1px solid var(--border);flex-shrink:0;"></div>
   </div>
 </div>
 
@@ -163,8 +166,8 @@ const projects = [
       <div style="position:relative;flex:1;">
         <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='flex'?'none':'flex'" style="width:100%;padding:.6rem;border-radius:6px;border:1px solid #404040;color:var(--muted);font-size:.875rem;background:none;cursor:pointer;">⬇ Install Aset</button>
         <div style="display:none;position:absolute;bottom:110%;left:0;width:100%;background:#1a1a1a;border:1px solid #2e2e2e;border-radius:6px;flex-direction:column;overflow:hidden;z-index:10;">
-          <a href="${links[i].install.mediafire}" target="_blank" style="padding:.6rem 1rem;font-size:.875rem;color:var(--text);display:block;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background=''">📦 Mediafire</a>
-          <a href="${links[i].install.savelink}" target="_blank" style="padding:.6rem 1rem;font-size:.875rem;color:var(--text);display:block;border-top:1px solid #2e2e2e;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background=''">🔗 Savelink</a>
+          <a href="${links[i].install.mediafire}" target="_blank" style="padding:.6rem 1rem;font-size:.875rem;color:var(--text);display:block;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background=''">Mediafire</a>
+          <a href="${links[i].install.savelink}" target="_blank" style="padding:.6rem 1rem;font-size:.875rem;color:var(--text);display:block;border-top:1px solid #2e2e2e;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background=''">Savelink</a>
         </div>
       </div>
       <a href="${links[i].game}" target="_blank" style="flex:1;text-align:center;padding:.6rem;border-radius:6px;background:var(--accent);color:#fff;font-size:.875rem;">Buka Game Roblox</a>
