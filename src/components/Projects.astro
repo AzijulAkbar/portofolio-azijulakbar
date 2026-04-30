@@ -90,9 +90,18 @@ const projects = [
   const footerEl = document.getElementById('modal-footer')!;
 
   const links = [
-    { install: 'https://sfl.gl/ViuAuv', game: 'https://www.roblox.com/games/126884695634066/Grow-a-Garden' },
-    { install: 'https://sfl.gl/mTOQfD', game: 'https://www.roblox.com/games/109983668079237/Steal-a-Brainrot' },
-    { install: 'https://sfl.gl/FwvfXRV', game: 'https://www.roblox.com/games/127742093697776/Plants-Brainrots' },
+    {
+      install: { mediafire: 'https://www.mediafire.com/file/d67skx7iw7gso44/GrowAGarden.rar/file', savelink: 'https://sfl.gl/ViuAuv' },
+      game: 'https://www.roblox.com/games/126884695634066/Grow-a-Garden'
+    },
+    {
+      install: { mediafire: 'https://www.mediafire.com/file/q268bjl9brvp3k3/StealABerainrot.rar/file', savelink: 'https://sfl.gl/mTOQfD' },
+      game: 'https://www.roblox.com/games/109983668079237/Steal-a-Brainrot'
+    },
+    {
+      install: { mediafire: 'https://www.mediafire.com/file/yfqjeq1cqhsyezm/PlantVsBrainrot.rar/file', savelink: 'https://sfl.gl/FwvfXRV' },
+      game: 'https://www.roblox.com/games/127742093697776/Plants-Brainrots'
+    },
   ];
 
   const details = [
@@ -151,8 +160,14 @@ const projects = [
       `<span style="font-size:.75rem;color:var(--accent-light);background:#1f1535;padding:.2rem .6rem;border-radius:4px;">${s}</span>`
     ).join('');
     footerEl.innerHTML = `
-      <a href="${links[i].install}" target="_blank" style="flex:1;text-align:center;padding:.6rem;border-radius:6px;border:1px solid #404040;color:var(--muted);font-size:.875rem;">⬇ Install Aset</a>
-      <a href="${links[i].game}" target="_blank" style="flex:1;text-align:center;padding:.6rem;border-radius:6px;background:var(--accent);color:#fff;font-size:.875rem;">🎮 Buka Game</a>
+      <div style="position:relative;flex:1;">
+        <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='flex'?'none':'flex'" style="width:100%;padding:.6rem;border-radius:6px;border:1px solid #404040;color:var(--muted);font-size:.875rem;background:none;cursor:pointer;">⬇ Install Aset</button>
+        <div style="display:none;position:absolute;bottom:110%;left:0;width:100%;background:#1a1a1a;border:1px solid #2e2e2e;border-radius:6px;flex-direction:column;overflow:hidden;z-index:10;">
+          <a href="${links[i].install.mediafire}" target="_blank" style="padding:.6rem 1rem;font-size:.875rem;color:var(--text);display:block;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background=''">📦 Mediafire</a>
+          <a href="${links[i].install.savelink}" target="_blank" style="padding:.6rem 1rem;font-size:.875rem;color:var(--text);display:block;border-top:1px solid #2e2e2e;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background=''">🔗 Savelink</a>
+        </div>
+      </div>
+      <a href="${links[i].game}" target="_blank" style="flex:1;text-align:center;padding:.6rem;border-radius:6px;background:var(--accent);color:#fff;font-size:.875rem;">Buka Game Roblox</a>
     `;
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
