@@ -50,9 +50,9 @@ const projects = [
 
 <!-- Modal data di-inject via JS agar selalu center di viewport -->
 <div id="modal-overlay" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
-  <div id="modal-box" style="background:var(--surface);border:1px solid #2e2e2e;border-radius:12px;width:90%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;">
-    <img id="modal-img" src="" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;" />
-    <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;">
+  <div id="modal-box" style="background:var(--surface);border:1px solid #2e2e2e;border-radius:12px;width:90%;max-width:560px;max-height:90vh;overflow:hidden;position:relative;display:flex;flex-direction:column;">
+    <img id="modal-img" src="" alt="" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;flex-shrink:0;" />
+    <div style="padding:1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto;flex:1;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;">
         <h3 id="modal-title" style="font-size:1.2rem;color:#ffffff;"></h3>
         <button id="modal-close" style="background:none;border:none;color:var(--muted);font-size:1.25rem;cursor:pointer;line-height:1;flex-shrink:0;">✕</button>
@@ -60,6 +60,7 @@ const projects = [
       <div id="modal-software" style="display:flex;flex-wrap:wrap;gap:.4rem;"></div>
       <p id="modal-details" style="color:var(--muted);font-size:.9rem;white-space:pre-line;line-height:1.8;"></p>
     </div>
+    <div id="modal-footer" style="display:flex;gap:.75rem;padding:1rem 1.5rem;border-top:1px solid #2e2e2e;flex-shrink:0;"></div>
   </div>
 </div>
 
@@ -85,6 +86,15 @@ const projects = [
   const detailsEl = document.getElementById('modal-details')!;
   const closeBtn = document.getElementById('modal-close')!;
 
+  const scrollEl = document.querySelector('#modal-box > div') as HTMLElement;
+  const footerEl = document.getElementById('modal-footer')!;
+
+  const links = [
+    { install: 'https://sfl.gl/ViuAuv', game: 'https://www.roblox.com/games/126884695634066/Grow-a-Garden' },
+    { install: 'https://sfl.gl/mTOQfD', game: 'https://www.roblox.com/games/109983668079237/Steal-a-Brainrot' },
+    { install: 'https://sfl.gl/FwvfXRV', game: 'https://www.roblox.com/games/127742093697776/Plants-Brainrots' },
+  ];
+
   const details = [
     `Grow a Garden adalah game indie di platform Roblox yang dikembangkan oleh Splitting Point Studios dan Do Big Studios.
 
@@ -101,20 +111,6 @@ const projects = [
     3. Cuaca dan Mutasi: Adanya sistem cuaca dapat memicu mutasi tanaman, yang meningkatkan nilai jual hasil panen atau membantu menyelesaikan misi (quests) tertentu.
     4. Event: Terdapat event musiman seperti Easter 2026 dan fitur komunitas seperti Community Garden.`,
 
-    `Plants & Brainrots adalah game Roblox yang dikembangkan oleh Splitting Point - PVB.
-
-    Penjelasan Game: Fokus utama game ini adalah pertarungan antara tanaman dan makhluk yang disebut brainrots.
-    
-    Cara Bermain:
-    1. Pemain harus menanam berbagai jenis tanaman yang berfungsi untuk menghancurkan serangan brainrots.
-    2. Setiap kali berhasil menghancurkan musuh, pemain akan mendapatkan uang.
-    3. Uang ini digunakan untuk membeli tanaman yang lebih kuat dan berbagai peningkatan (upgrades) lainnya.
-    
-    Fitur Utama:
-    1. Elemen Gameplay: Game ini menyediakan fitur Lucky Eggs, peralatan (gears), kartu (cards), dan sistem mutasi.
-    2. Eksplorasi: Terdapat berbagai biome, sistem cuaca, dan alur cerita (story) yang bisa diikuti pemain.
-    3. Mekanik Lanjutan: Pemain dapat menggunakan mesin pelebur (Fuse Machine) dan melakukan Rebirth untuk kemajuan karakter yang lebih jauh.`,
-
     `Steal a Brainrot adalah game Roblox karya pengembang BRAZILIAN SPYDER dan Sammy.
 
     Penjelasan Game: Berbeda dengan dua game sebelumnya, game ini memiliki aspek kompetitif yang kuat di mana pemain saling berinteraksi secara agresif.
@@ -129,6 +125,20 @@ const projects = [
     2. Perdagangan: Tersedia fitur Trade Machine yang memungkinkan pemain bertukar koleksi secara aman.
     3. Kustomisasi dan Evolusi: Terdapat fitur mutasi, mesin pelebur (fuse machine), dan sistem traits untuk memperkuat koleksi.
     4. Event Rutin: Game ini memiliki jadwal event khusus seperti Taco Tuesday yang diadakan setiap hari Selasa.`,
+
+    `Plants & Brainrots adalah game Roblox yang dikembangkan oleh Splitting Point - PVB.
+
+    Penjelasan Game: Fokus utama game ini adalah pertarungan antara tanaman dan makhluk yang disebut brainrots.
+    
+    Cara Bermain:
+    1. Pemain harus menanam berbagai jenis tanaman yang berfungsi untuk menghancurkan serangan brainrots.
+    2. Setiap kali berhasil menghancurkan musuh, pemain akan mendapatkan uang.
+    3. Uang ini digunakan untuk membeli tanaman yang lebih kuat dan berbagai peningkatan (upgrades) lainnya.
+    
+    Fitur Utama:
+    1. Elemen Gameplay: Game ini menyediakan fitur Lucky Eggs, peralatan (gears), kartu (cards), dan sistem mutasi.
+    2. Eksplorasi: Terdapat berbagai biome, sistem cuaca, dan alur cerita (story) yang bisa diikuti pemain.
+    3. Mekanik Lanjutan: Pemain dapat menggunakan mesin pelebur (Fuse Machine) dan melakukan Rebirth untuk kemajuan karakter yang lebih jauh.`,
   ];
 
   function openModal(i: number) {
@@ -140,15 +150,19 @@ const projects = [
     softwareEl.innerHTML = d.software.map(s =>
       `<span style="font-size:.75rem;color:var(--accent-light);background:#1f1535;padding:.2rem .6rem;border-radius:4px;">${s}</span>`
     ).join('');
+    footerEl.innerHTML = `
+      <a href="${links[i].install}" target="_blank" style="flex:1;text-align:center;padding:.6rem;border-radius:6px;border:1px solid #404040;color:var(--muted);font-size:.875rem;">⬇ Install Aset</a>
+      <a href="${links[i].game}" target="_blank" style="flex:1;text-align:center;padding:.6rem;border-radius:6px;background:var(--accent);color:#fff;font-size:.875rem;">🎮 Buka Game</a>
+    `;
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    requestAnimationFrame(() => { box.scrollTop = 0; });
+    requestAnimationFrame(() => { scrollEl.scrollTop = 0; });
   }
 
   function closeModal() {
     overlay.style.display = 'none';
     document.body.style.overflow = '';
-    requestAnimationFrame(() => { box.scrollTop = 0; });
+    requestAnimationFrame(() => { scrollEl.scrollTop = 0; });
   }
 
   document.querySelectorAll('[data-modal]').forEach(btn => {
