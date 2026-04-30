@@ -18,6 +18,12 @@ const projects = [
     software: ["Blender", "Roblox Studio"],
     image: "/projects/AsetPvB.png",
   },
+  {
+    title: "Kitchen Furniture Assets",
+    desc: "Aset 3D untuk game Roblox Plant vs Brainrot. Berisi karakter tanaman, musuh stylized, dan props arena.",
+    software: ["Blender"],
+    image: "/projects/AsetDapur.png",
+  }
 ];
 ---
 
@@ -94,16 +100,13 @@ const projects = [
 
   const links = [
     {
-      install: { mediafire: 'https://www.mediafire.com/file/d67skx7iw7gso44/GrowAGarden.rar/file', savelink: 'https://sfl.gl/ViuAuv' },
-      game: 'https://www.roblox.com/games/126884695634066/Grow-a-Garden'
+      install: { mediafire: 'https://www.mediafire.com/file/d67skx7iw7gso44/GrowAGarden.rar/file', savelink: 'https://sfl.gl/ViuAuv' }
     },
     {
-      install: { mediafire: 'https://www.mediafire.com/file/q268bjl9brvp3k3/StealABerainrot.rar/file', savelink: 'https://sfl.gl/mTOQfD' },
-      game: 'https://www.roblox.com/games/109983668079237/Steal-a-Brainrot'
+      install: { mediafire: 'https://www.mediafire.com/file/q268bjl9brvp3k3/StealABerainrot.rar/file', savelink: 'https://sfl.gl/mTOQfD' }
     },
     {
-      install: { mediafire: 'https://www.mediafire.com/file/yfqjeq1cqhsyezm/PlantVsBrainrot.rar/file', savelink: 'https://sfl.gl/FwvfXRV' },
-      game: 'https://www.roblox.com/games/127742093697776/Plants-Brainrots'
+      install: { mediafire: 'https://www.mediafire.com/file/yfqjeq1cqhsyezm/PlantVsBrainrot.rar/file', savelink: 'https://sfl.gl/FwvfXRV' }
     },
   ];
 
@@ -170,10 +173,10 @@ const projects = [
           <a href="${links[i].install.savelink}" target="_blank" style="padding:.6rem 1rem;font-size:.875rem;color:var(--text);display:block;border-top:1px solid #2e2e2e;" onmouseover="this.style.background='#262626'" onmouseout="this.style.background=''">Savelink</a>
         </div>
       </div>
-      <a href="${links[i].game}" target="_blank" style="flex:1;text-align:center;padding:.6rem;border-radius:6px;background:var(--accent);color:#fff;font-size:.875rem;">Buka Game Roblox</a>
-    `;
+    `
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    history.pushState({ modal: true }, '');
     requestAnimationFrame(() => { scrollEl.scrollTop = 0; });
   }
 
@@ -182,6 +185,10 @@ const projects = [
     document.body.style.overflow = '';
     requestAnimationFrame(() => { scrollEl.scrollTop = 0; });
   }
+
+  window.addEventListener('popstate', () => {
+    if (overlay.style.display === 'flex') closeModal();
+  });
 
   document.querySelectorAll('[data-modal]').forEach(btn => {
     btn.addEventListener('click', () => {
